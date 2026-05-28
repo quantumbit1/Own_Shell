@@ -29,7 +29,7 @@ int main() {
         std::cout << "exit is a shell builtin" << std::endl;
       }
       else{
-        std::cout << "invalid_command: not found" << std::endl;
+        std::cout << command_to_be_checked << ": not found" << std::endl;
       }
     }
     else{
