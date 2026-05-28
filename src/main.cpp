@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <vector>
+#include <unistd.h>
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -10,25 +13,44 @@ int main() {
     std::cout << "$ ";
     std::string command;
     std::getline(std::cin, command);
+    std::stringstream ss(command);
+
+    ss >> command;
+
     if(command == "exit"){
       break;
     }
-    else if(command.substr(0,5) == "echo "){
-      std::cout << command.substr(5) << std::endl;
+    else if(command == "echo "){
+      std::string word;
+      while(ss >> word){
+        std::cout << word <<" ";
+      std::cout << std::endl;
+      }
     }
-    else if(command.substr(0,5) == "type "){
+    else if(command == "type "){
       std::string command_to_be_checked;
-      command_to_be_checked = command.substr(5,command.substr(5).find(" "));
-      if(command_to_be_checked == "echo"){
-        std::cout << "echo is a shell builtin" << std::endl;
+      ss >> command_to_be_checked;
+      std::vector<std::string> builtin_commands = {"echo", "type", "exit"};
+      bool found = false;
+      for(const auto& builtin_command : builtin_commands){
+        if(command_to_be_checked == builtin_command){
+          std::cout << command_to_be_checked << " is a shell builtin" << std::endl;
+          found = true;
+        }
       }
-      else if(command_to_be_checked == "type"){
-        std::cout << "type is a shell builtin" << std::endl;
+      if(!found){
+        std::string path = std::getenv("PATH");
+        std::stringstream ss_path(path);
+        while(std::getline(ss_path, path, ":")){
+          std::string full_path = path + "/"+ command_to_be_checked;
+          if(access.(full_path.c_str(), X_OK) == 0){
+            std::cout << command_to_be_checked << " is " << full_path << std::endl;
+            found = true;
+            break;
+          }
+        }
       }
-      else if(command_to_be_checked == "exit"){
-        std::cout << "exit is a shell builtin" << std::endl;
-      }
-      else{
+      if(!found){
         std::cout << command_to_be_checked << ": not found" << std::endl;
       }
     }
