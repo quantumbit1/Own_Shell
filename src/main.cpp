@@ -18,7 +18,7 @@ int main() {
     }
     else if(command.substr(0,4) == "type "){
       std::string command_to_be_checked;
-      command_to_be_checked = command.substr(command.substr(5).find(" ") - 5);
+      command_to_be_checked = command.substr(5,command.substr(5).find(" "));
       if(command_to_be_checked == "echo"){
         std::cout << "echo is a shell builtin" << std::endl;
       }
@@ -29,7 +29,7 @@ int main() {
         std::cout << "exit is a shell builtin" << std::endl;
       }
       else{
-        std::cout << command_to_be_checked << "invalid_command: not found" << std::endl;
+        std::cout << "invalid_command: not found" << std::endl;
       }
     }
     else{
