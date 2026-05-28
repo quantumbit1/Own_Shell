@@ -24,8 +24,8 @@ int main() {
       std::string word;
       while(ss >> word){
         std::cout << word <<" ";
-      std::cout << std::endl;
       }
+      std::cout << std::endl;
     }
     else if(command == "type"){
       std::string command_to_be_checked;
