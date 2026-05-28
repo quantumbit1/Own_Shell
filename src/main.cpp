@@ -13,10 +13,10 @@ int main() {
     if(command == "exit"){
       break;
     }
-    else if(command.substr(0,4) == "echo "){
+    else if(command.substr(0,5) == "echo "){
       std::cout << command.substr(5) << std::endl;
     }
-    else if(command.substr(0,4) == "type "){
+    else if(command.substr(0,5) == "type "){
       std::string command_to_be_checked;
       command_to_be_checked = command.substr(5,command.substr(5).find(" "));
       if(command_to_be_checked == "echo"){
