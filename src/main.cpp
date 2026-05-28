@@ -43,7 +43,7 @@ int main() {
         std::stringstream ss_path(path);
         while(std::getline(ss_path, path, ":")){
           std::string full_path = path + "/"+ command_to_be_checked;
-          if(access.(full_path.c_str(), X_OK) == 0){
+          if(access(full_path.c_str(), X_OK) == 0){
             std::cout << command_to_be_checked << " is " << full_path << std::endl;
             found = true;
             break;
