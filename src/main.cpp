@@ -20,14 +20,14 @@ int main() {
     if(command == "exit"){
       break;
     }
-    else if(command == "echo "){
+    else if(command == "echo"){
       std::string word;
       while(ss >> word){
         std::cout << word <<" ";
       std::cout << std::endl;
       }
     }
-    else if(command == "type "){
+    else if(command == "type"){
       std::string command_to_be_checked;
       ss >> command_to_be_checked;
       std::vector<std::string> builtin_commands = {"echo", "type", "exit"};
