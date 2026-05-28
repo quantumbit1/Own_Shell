@@ -16,7 +16,9 @@ int main() {
     else if(command == "echo"){
       std::cout << command.substr(5) << std::endl;
     }
-    std::cout << command << ": command not found" << std::endl;
+    else{
+      std::cout << command << ": command not found" << std::endl;
+    }
   }
 
 }
