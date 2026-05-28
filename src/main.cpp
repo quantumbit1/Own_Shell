@@ -2,7 +2,12 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <unistd.h>
+#include <filesystem>
+#ifdef _WIN32
+  #include <windows.h>
+#else
+  #include <unistd.h>
+#endif
 
 int main() {
   // Flush after every std::cout / std:cerr
@@ -43,7 +48,12 @@ int main() {
         std::stringstream ss_path(path);
         while(std::getline(ss_path, path, ":")){
           std::string full_path = path + "/"+ command_to_be_checked;
+          #ifdef _WIN32
+          DWORD attribs = GetFileAttributesA(full_path.c_str());
+          if(attribs != INVALID_FILE_ATTRIBUTES && !(attribs & FILE_ATTRIBUTE_DIRECTORY)){
+          #else
           if(access(full_path.c_str(), X_OK) == 0){
+          #endif
             std::cout << command_to_be_checked << " is " << full_path << std::endl;
             found = true;
             break;
