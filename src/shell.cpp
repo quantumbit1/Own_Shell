@@ -13,7 +13,8 @@ namespace {
 const std::vector<std::string> builtin_commands = {
   "echo",
   "type",
-  "exit"
+  "exit",
+  "pwd"
 };
 
 } // namespace
@@ -114,6 +115,7 @@ void handle_external_command_execution(const std::vector<std::string>& args,std:
     waitpid(pid, &status, 0);
   }
 }
+
 int run() {
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
