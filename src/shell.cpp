@@ -1,9 +1,10 @@
 #include "shell.h"
-
+#include <cstring>
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
+#include <sys/wait.h>
 
 namespace shell {
 
