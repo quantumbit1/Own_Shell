@@ -106,7 +106,6 @@ void handle_external_command_execution(const std::vector<std::string>& args) {
     c_args.push_back(nullptr);
 
     execv(c_args[0], c_args.data());
-    std::cerr << "Failed to execute " << c_args[0] << ": " << std::strerror(errno) << std::endl;
     std::exit(1);
   } else {
     // Parent process
