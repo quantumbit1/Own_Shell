@@ -92,7 +92,7 @@ void handle_type(const std::vector<std::string>& args) {
 void handle_external_command_execution(const std::vector<std::string>& args) {
   pid_t pid = fork();
   if (pid < 0) {
-    std::cerr << "Failed to fork: " << strerror(errno) << std::endl;
+    std::cerr << "Failed to fork: " << std::strerror(errno) << std::endl;
     return;
   }
 
@@ -105,7 +105,7 @@ void handle_external_command_execution(const std::vector<std::string>& args) {
     c_args.push_back(nullptr);
 
     execv(c_args[0], c_args.data());
-    std::cerr << "Failed to execute " << c_args[0] << ": " << strerror(errno) << std::endl;
+    std::cerr << "Failed to execute " << c_args[0] << ": " << std::strerror(errno) << std::endl;
     std::exit(1);
   } else {
     // Parent process
