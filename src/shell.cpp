@@ -89,6 +89,30 @@ void handle_type(const std::vector<std::string>& args) {
   std::cout << command_to_check << ": not found" << std::endl;
 }
 
+void handle_external_command_execution(const std::vector<std::string>& args) {
+  pid_t pid = fork();
+  if (pid < 0) {
+    std::cerr << "Failed to fork: " << strerror(errno) << std::endl;
+    return;
+  }
+
+  if (pid == 0) {
+    // Child process
+    std::vector<char*> c_args;
+    for (const auto& arg : args) {
+      c_args.push_back(const_cast<char*>(arg.c_str()));
+    }
+    c_args.push_back(nullptr);
+
+    execv(c_args[0], c_args.data());
+    std::cerr << "Failed to execute " << c_args[0] << ": " << strerror(errno) << std::endl;
+    std::exit(1);
+  } else {
+    // Parent process
+    int status;
+    waitpid(pid, &status, 0);
+  }
+}
 int run() {
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
@@ -116,7 +140,12 @@ int run() {
     } else if (command == "type") {
       handle_type(args);
     } else {
-      std::cout << command << ": command not found" << std::endl;
+      std::string full_path = find_executable_in_path(command);
+      if (full_path.empty()) {
+        std::cout << command << ": command not found" << std::endl;
+      }else {
+        handle_external_command_execution(args);
+      }
     }
   }
 
