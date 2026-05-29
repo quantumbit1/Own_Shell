@@ -103,6 +103,7 @@ void handle_external_command_execution(const std::vector<std::string>& args,std:
     for (const auto& arg : args) {
       c_args.push_back(const_cast<char*>(arg.c_str()));
     }
+    //necessary to add this as the execv function expects a null-terminated array of C strings.
     c_args.push_back(nullptr);
 
     execv(full_path.c_str(), c_args.data());
